@@ -1,0 +1,27 @@
+
+<h2>All Students' Report Cards</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Class</th>
+            <th>Average Marks (%)</th>
+            <th>Attendance</th>
+            <th>Performance Remark</th>
+            <th>Attendance Remark</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for report in report_cards %}
+        <tr>
+            <td>{{ report.student.profile.user.username }}</td>
+            <td>{{ report.student.school_class.classname }}</td>
+            <td>{{ report.average_marks|floatformat:2 }}</td>
+            <td>{{ report.total_attendance }}/{{ report.total_classes }}</td>
+            <td>{{ report.performance_remark }}</td>
+            <td>{{ report.attendance_remark }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+

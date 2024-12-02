@@ -1,0 +1,154 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    .projected {
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2),
+                    0 15px 30px rgba(0, 0, 0, 0.15);
+        border-radius: 12px;
+        background: #ffffff;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .projected:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3),
+                    0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .container-custom {
+        padding: 30px;
+        background: linear-gradient(145deg, #f3f3f3, #ffffff);
+        border-radius: 15px;
+        box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1),
+                    -8px -8px 16px rgba(255, 255, 255, 0.8);
+    }
+
+    .form-section {
+        padding: 20px;
+        margin-bottom: 20px;
+        background: #fefefe;
+    }
+
+    .list-group-item {
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 10px;
+        border-radius: 8px;
+        background: #ffffff;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="projected container-custom">
+        <h1 class="text-center mb-4">Fee Payment Reports</h1>
+
+        <!-- Daily Report Form -->
+        <form method="GET" class="projected form-section mb-4">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label for="daily_date" class="form-label">Select Daily Report Date:</label>
+                    <input type="date" id="daily_date" name="daily_date" class="form-control" value="{{ daily_date }}">
+                </div>
+                <div class="col-md-2 mt-3 mt-md-0">
+                    <button type="submit" class="btn btn-primary w-100">View Daily Report</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Daily Report Section -->
+        <div class="projected p-3 mb-4">
+            <h2 class="text-success">Daily Fee Payment Report ({{ daily_date }})</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Total Collected: ₹{{ daily_report.total_collected|default:"0.00" }}</li>
+                <li class="list-group-item">Total Pending: ₹{{ daily_report.total_pending|default:"0.00" }}</li>
+            </ul>
+            <canvas id="dailyPaymentChart" width="150" height="150"></canvas>
+        </div>
+
+        <!-- Monthly Report Form -->
+        <form method="GET" class="projected form-section mb-4">
+            <div class="row align-items-end">
+                <div class="col-md-3">
+                    <label for="start_date" class="form-label">Start Date:</label>
+                    <input type="date" id="start_date" name="start_date" class="form-control" value="{{ start_date }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="end_date" class="form-label">End Date:</label>
+                    <input type="date" id="end_date" name="end_date" class="form-control" value="{{ end_date }}">
+                </div>
+                <div class="col-md-2 mt-3 mt-md-0">
+                    <button type="submit" class="btn btn-primary w-100">View Monthly Report</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Monthly Report Section -->
+        <div class="projected p-3">
+            <h2 class="text-primary">Monthly Fee Payment Report ({{ start_date }} to {{ end_date }})</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Total Collected: ₹{{ monthly_report.total_collected|default:"0.00" }}</li>
+                <li class="list-group-item">Total Pending: ₹{{ monthly_report.total_pending|default:"0.00" }}</li>
+            </ul>
+            <canvas id="monthlyPaymentChart" width="400" height="200"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Daily Fee Payment Chart
+    const dailyPaymentCtx = document.getElementById('dailyPaymentChart').getContext('2d');
+    const dailyPaymentChart = new Chart(dailyPaymentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Collected', 'Pending'],
+            datasets: [{
+                label: 'Daily Fee Payment',
+                data: [
+                    {{ daily_report.total_collected|default:0 }},
+                    {{ daily_report.total_pending|default:0 }}
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+    });
+
+    // Monthly Fee Payment Chart
+    const monthlyPaymentCtx = document.getElementById('monthlyPaymentChart').getContext('2d');
+    const monthlyPaymentChart = new Chart(monthlyPaymentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Collected', 'Pending'],
+            datasets: [{
+                label: 'Monthly Fee Payment',
+                data: [
+                    {{ monthly_report.total_collected|default:0 }},
+                    {{ monthly_report.total_pending|default:0 }}
+                ],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 99, 132, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>

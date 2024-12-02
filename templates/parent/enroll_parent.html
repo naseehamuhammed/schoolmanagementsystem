@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll Parent</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #001f3f;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background-color: #001f3f; 
+            border-color: #001f3f; 
+        }
+
+        .btn-primary:hover {
+            background-color: #001f3f; 
+            border-color: #001f3f; 
+        }
+
+
+        .btn-submit {
+            background-color: #001f3f;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #001f3f;
+            color: #ffffff;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.6rem;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d1ecf1;
+        }
+
+        footer {
+            background-color: #001f3f !important;
+            color: #ffffff !important;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1 !important;
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Zeal International School</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 class="text-center">Enroll Parent</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="parent_name">Parent Name:</label>
+            <input type="text" id="parent_name" name="parent_name" required class="form-control" placeholder="Enter Parent Name">
+        </div>
+        <div class="form-group">
+            <label for="child">Select Child(s):</label>
+            <select id="child" name="child" class="form-control" multiple required>
+                <option value="">-- Select a child --</option>
+                {% for student in students %}
+                    <option value="{{ student.id }}">
+                        {{ student.profile.user.username }} - Grade: {{ student.school_class.classname }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+
+        <div class="form-group">
+            <label for="contact">Contact Number:</label>
+            <input type="text" id="contact" name="contact" required class="form-control" placeholder="Enter Contact Number" value="{{ form.contact.value }}">
+        </div>
+        
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required class="form-control" placeholder="Enter Password">
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required class="form-control" placeholder="Confirm Password">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required class="form-control" placeholder="Enter Email">
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Enroll Parent</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Add Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 on the 'Select Child' dropdown
+        $('#child').select2({
+            placeholder: "Select a child",  // Placeholder text
+            allowClear: true               // Allow clearing the selection
+        });
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

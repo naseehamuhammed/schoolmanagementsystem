@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+    <!-- Bootstrap CSS (use your custom stylesheet if you prefer) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom styles (if any) -->
+
+    <!-- Optional: Add custom font if needed -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #001f3f;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background-color: #001f3f; /* Set the background color */
+            border-color: #001f3f; /* Ensure the border matches the background */
+}
+
+        .btn-primary:hover {
+            background-color: #001f3f; /* Keep the same color on hover */
+            border-color: #001f3f; /* Keep the border the same on hover */
+}
+
+
+        .btn-submit {
+            background-color: #001f3f;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #004b8d;
+            color: #ffffff;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.6rem;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d1ecf1;
+        }
+
+        footer {
+            background-color: #001f3f !important;
+            color: #ffffff !important;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1 !important;
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #ffffff !important;
+        }
+        </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Zeal International School</a>
+    </div>
+</nav>
+
+<!-- Navbar or any other common elements (optional) -->
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Login</h2>
+            
+            <!-- Display error messages -->
+            {% if messages %}
+                <div class="alert alert-danger">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Username (Email) -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email address" required>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group mt-3">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                </div>
+
+                <!-- Sign-up Link -->
+                <div class="mt-3 text-center">
+                    <p>Don't have an account? <a href="{% url 'users:enroll_student' %}">Sign Up</a></p>
+                </div>
+                <!-- Sign-up Link -->
+                <div class="mt-3 text-center">
+                    <p>Forgot Password?<a href="{% url 'users:reset_password' %}">Reset Password</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Optional: Add Footer if needed -->
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

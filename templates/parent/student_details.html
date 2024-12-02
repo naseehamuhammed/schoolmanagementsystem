@@ -1,0 +1,13 @@
+{% if student_data %}
+    <h2>Your Children</h2>
+    {% for student in student_data %}
+        <div class="student">
+            <h3>{{ student.name }}</h3>
+
+            <p><strong>Class:</strong>{{ student.school_class }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Address:</strong> {{ student.address }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+

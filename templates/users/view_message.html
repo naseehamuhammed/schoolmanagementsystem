@@ -1,0 +1,8 @@
+<h1>Message Details</h1>
+<p><strong>From:</strong> {{ message.sender.user.username }}</p>
+<p><strong>Content:</strong></p>
+<p>{{ message.content }}</p>
+<p><strong>Sent At:</strong> {{ message.sent_at }}</p>
+<a href="{% url 'users:message_inbox' %}">Back to Inbox</a>
+
+

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Confirmation</title>
+</head>
+<body>
+    <h1>Registration Successful!</h1>
+    <p>Thank you for registering for the event: <strong>{{ event.name }}</strong>.</p>
+    <p>We have received your details, and you will receive a confirmation email soon.</p>
+    <a href="{% url 'users:events' %}">Back to events</a>
+</body>
+</html>

@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #001f3f; /* Dark navy blue */
+            font-weight: 700;
+        }
+        /* Style the Login and Signup buttons */
+        .btn-login-signup {
+            background-color: #001f3f; /* Dark navy blue */
+            color: #ffffff; /* White text */
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .btn-login-signup:hover {
+            background-color: #004b8d; /* Lighter blue shade on hover */
+            color: #ffffff;
+        }
+
+        /* Apply to paragraphs */
+        p {
+            font-family: 'Roboto', sans-serif;
+            color: #333333; /* Neutral gray */
+            line-height: 1.6;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.5rem; /* Adjust as needed */
+            margin-bottom: 20px;
+        }
+
+        .about-section h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d1ecf1;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            background-color: #f8f9fa;
+        }
+
+        .logo-container img {
+            max-height: 150px;
+            width: auto;
+        }
+
+        .welcome-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .about-section {
+            background-color: #eef3f7;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #001f3f !important; /* Dark navy blue */
+            color: #ffffff !important; /* White text */
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff !important; /* White links */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1 !important; /* Light blue color on hover */
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #ffffff !important; /* Ensure white color for all footer text */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'users:home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="School Logo" width="30" height="30">
+            Zeal International School
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:enroll_teacher' %}">Teachers</a> <!-- Updated link -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:enroll_student' %}">Students</a> <!-- Updated link -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:enroll_principal' %}">Principal</a> <!-- Updated link -->
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:enroll_parent' %}">Parents</a> <!-- Updated link -->
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Logo -->
+<div class="logo-container">
+    {% load static %}
+    <img src="{% static 'images/logo.png' %}" alt="School Logo" class="img-fluid">
+</div>
+
+<!-- Main Content -->
+<main class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="welcome-section">
+                <h2>Welcome to Zeal International School</h2>
+                <p class="mt-3">Your one-stop solution for managing school operations efficiently.</p>
+               
+                    <div class="mt-4">
+                        <a href="{% url 'users:login' %}" class="btn btn-login-signup">Login</a>
+                    
+                    </div>
+                    
+                
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="about-section">
+                <h2>About Our School</h2>
+                <p class="mt-3">
+                    At Zeal International School, we strive to provide a nurturing and inclusive environment where students
+                    can grow academically, socially, and emotionally. Our state-of-the-art facilities and dedicated staff
+                    ensure a holistic education for every student.
+                </p>
+                <p class="mt-3">
+                    <strong>Our Mission:</strong> To empower students with knowledge, values, and skills to excel in life
+                    and contribute positively to society.
+                </p>
+                <p class="mt-3">
+                    <strong>Our Vision:</strong> To be a leader in innovative education, shaping the leaders of tomorrow.
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p><strong>School Address:</strong> Zeal International School, Kannur, Kerala, India</p>
+        <p><strong>Email:</strong> schoolmanagement@example.com</p>
+        <p><strong>Phone:</strong> +91-9876543210</p>
+        <p><strong>Location:</strong> <a href="https://maps.app.goo.gl/NGgSYzNbaTVNY87v9?g_st=ic" target="_blank" rel="noopener noreferrer">View on Google Maps</a></p>
+        <p>&copy; 2024 School Management System. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

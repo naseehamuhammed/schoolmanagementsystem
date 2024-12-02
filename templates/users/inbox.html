@@ -1,0 +1,24 @@
+<h1>Messages</h1>
+{% for message in messages %}
+    <div>
+        <p><strong>From:</strong> {{ message.sender.user.username }}</p>
+        <p><strong>Sent at:</strong> {{ message.sent_at }}</p>
+        <p>{{ message.content }}</p>
+        <p><a href="{% url 'send_message' message.sender.user.username %}">Reply</a></p>
+        <hr>
+    </div>
+{% empty %}
+    <p>No messages found.</p>
+{% endfor %}
+
+<h2>Send Message to Teachers</h2>
+<ul>
+    {% for teacher in teachers %}
+        <li>
+            {{ teacher.username }}
+            <a href="{% url 'send_message' recipient_username=teacher.username %}">Send Message</a>
+        </li>
+    {% empty %}
+        <p>No teachers available.</p>
+    {% endfor %}
+</ul>

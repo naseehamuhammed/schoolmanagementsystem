@@ -1,0 +1,13 @@
+<h1>Inbox</h1>
+<ul>
+    {% for message in messages %}
+        <li>
+            <strong>From:</strong> {{ message.sender.user.username }}<br>
+            <strong>Content:</strong> {{ message.content|truncatechars:50 }}<br>
+            <a href="{% url 'users:view_message' message.id %}">View Full Message</a>
+            <hr>
+        </li>
+    {% empty %}
+        <p>No messages in your inbox.</p>
+    {% endfor %}
+</ul>

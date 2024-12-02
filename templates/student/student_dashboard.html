@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #003366;
+        }
+
+        .navbar .navbar-brand, 
+        .navbar .nav-link {
+            color: white;
+            font-weight: 500;
+        }
+
+        .navbar .nav-link:hover {
+            color: #f1f1f1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: #003366;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+
+        .sidebar h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sidebar .list-group-item {
+            background-color: #003366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        .sidebar .list-group-item:hover {
+            background-color: #002244;
+            color: white;
+        }
+
+        /* Card Styling */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Table Styling */
+        .table th {
+            background-color: #003366;
+            color: white;
+            font-weight: 600;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #003366;
+            border-color: #003366;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #002244;
+            border-color: #002244;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Student Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:view_grades' %}">Exam Results</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:school_news' %}">School News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:events' %}">Events</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:logout_view' %}">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:view_report_card' %}">Report Card</a></li>
+                
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <h4>Navigation</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{% url 'users:student_profile' %}">Profile</a></li>
+                        <li class="list-group-item"><a href="{% url 'users:catalog' %}">Library</a></li>
+                        <li class="list-group-item"><a href="{% url 'users:student_attendance' %}">Attendance</a></li>
+                        <li class="list-group-item"><a href="{% url 'users:school_news' %}">School News</a></li>
+                        <li class="list-group-item"><a href="{% url 'users:student_timetable' %}">Timetable</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Welcome Section -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Welcome to Your Dashboard</h5>
+                        <p>Stay updated with your classes, assignments, and school activities.</p>
+                    </div>
+                </div>
+                <!-- Bus Assignment Section -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5>Your Bus Assignment</h5>
+                        {% if bus_assignment %}
+                            <p><strong>Bus Number:</strong> {{ bus_assignment.bus.bus_number }}</p>
+                            <p><strong>Pickup Point:</strong> {{ bus_assignment.pickup_point }}</p>
+                            <p><strong>Driver:</strong> {{ driver.name }}</p>
+                            <p><strong>Phone:</strong> {{ driver.contact }}</p>
+                        {% else %}
+                            <p>No bus assigned for today.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

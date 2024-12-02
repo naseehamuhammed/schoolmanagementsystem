@@ -1,0 +1,135 @@
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+  
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: #001f3f;
+      margin-bottom: 20px;
+    }
+  
+    h3 {
+      color: #555;
+      margin-bottom: 15px;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    table th, table td {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+  
+    table th {
+      background-color:  #001f3f;
+      color: white;
+      font-weight: bold;
+    }
+  
+    table tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  
+    table tr:hover {
+      background-color: #f1f1f1;
+    }
+  
+    button {
+      background-color:  #001f3f;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+  
+    button:hover {
+      background-color:  #001f3f;
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    ul li {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    form {
+      margin-top: 20px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+  
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      margin: 0;
+    }
+  </style>
+  
+  <h1>Parent Invoices</h1>
+
+  <h3>Select Fee Types to Pay</h3>
+
+  <form method="post"  action="{% url 'users:generate_bill' %}">
+    {% csrf_token %}
+    <table>
+      <thead>
+        <tr>
+          <th>Fee Type</th>
+          <th>Amount</th>
+          <th>Class Group</th>
+          <th>Select</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fee_type in fee_types %}
+          <tr>
+            <td>{{ fee_type.name }}</td>
+            <td>{{ fee_type.amount }}</td>
+            <td>{{ fee_type.get_class_group_display }}</td>  <!-- This will display the friendly class group name -->
+            <td>
+              <input type="checkbox" name="fee_types" value="{{ fee_type.id }}">
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <button type="submit">Pay Selected Fee Types</button>
+  </form>
+
+  {% if children %}
+    <h3>Your Children</h3>
+    <ul>
+      {% for child in children %}
+        <li>{{ child.profile.user.username }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+
+

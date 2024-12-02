@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report Card</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function printReportCard() {
+            window.print(); // This triggers the print dialog
+        }
+    </script>
+    <style>
+        @media print {
+    .btn-primary {
+        display: none; /* Hide the print button when printing */
+    }
+}
+    </style>
+
+    
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center mt-4">Student Report Card</h1>
+
+    <!-- Print Button -->
+    <div class="text-center">
+        <button class="btn btn-primary mt-3" onclick="printReportCard()">Print Report Card</button>
+    </div>
+
+    <h3 class="mt-4">Student: {{ student.profile.user.username }}</h3>
+
+    <div class="mt-4">
+        <h4>Attendance Summary</h4>
+        <p>Total Classes: {{ total_classes }}</p>
+        <p>Total Attendance: {{ total_attendance }}</p>
+        <p>Attendance Rate: {{ total_attendance|floatformat:2 }} / {{ total_classes }} ({{ total_attendance|floatformat:2 }}%)</p>
+        <p>Remarks: {{ remarks }}</p>
+    </div>
+
+    <div class="mt-4">
+        <h4>Grades</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Exam Name</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grade in grades %}
+                <tr>
+                    <td>{{ grade.exam.name }}</td>
+                    <td>{{ grade.marks }}</td>
+                    <td>{{ grade.grade }}</td>
+                    <td>{{ grade.course.name }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No grades available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <h4>Overall Performance</h4>
+        <p>Average Marks: {{ average_marks|floatformat:2 }}%</p>
+        <p>Performance Remark: {{ performance_remark }}</p>
+    </div>
+</div>
+
+</body>
+</html>

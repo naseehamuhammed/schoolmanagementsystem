@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable for {{ class_obj.name }} - {{ class_obj.section }}</title>
+</head>
+<body>
+    <h1>Timetable for {{ class_obj.name }} - {{ class_obj.section }}</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for day, timetables in timetable_by_day.items %}
+                <tr>
+                    <td colspan="4" style="background-color: #f0f0f0; text-align: center;"><strong>{{ day }}</strong></td>
+                </tr>
+                {% for timetable in timetables %}
+                    <tr>
+                        <td>{{ day }}</td>
+                        <td>{{ timetable.subject.name }}</td>
+                        <td>{{ timetable.teacher.profile.user.username }}</td>
+                        <td>{{ timetable.start_time }} - {{ timetable.end_time }}</td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

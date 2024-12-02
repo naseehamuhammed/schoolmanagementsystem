@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School News</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d1ecf1;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #001f3f;
+            font-weight: 700;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .news-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .news-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #001f3f;
+        }
+
+        .news-description {
+            font-size: 1rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .news-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+
+        footer {
+            background-color: #001f3f;
+            color: #ffffff;
+            padding: 20px 0;
+            text-align: center;
+
+        }
+
+        footer a {
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1 !important;
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Zeal International School</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2>School News</h2>
+
+    <div class="news-container">
+        <ul class="list-unstyled">
+            {% for news in news %}
+            <li class="news-item">
+                <h3 class="news-title">{{ news.title }}</h3>
+                <p class="news-description">{{ news.description }}</p>
+                <small class="news-date">Posted on {{ news.created_at }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

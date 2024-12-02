@@ -1,0 +1,11 @@
+<h3>Borrow Book: "{{ book.title }}"</h3>
+
+{% if book.availability_status == 'Available' %}
+    <p>You are about to borrow the book "{{ book.title }}". The due date will be 2 weeks from today.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Confirm Borrow</button>
+    </form>
+{% else %}
+    <p>This book is currently unavailable.</p>
+{% endif %}

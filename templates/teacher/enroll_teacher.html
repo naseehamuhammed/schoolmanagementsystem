@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enroll Teacher</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #001f3f;
+            font-weight: 700;
+        }
+
+        .btn-submit {
+            background-color: #001f3f;
+            color: #ffffff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            display: inline-block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background-color: #004b8d;
+            color: #ffffff;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+            color: #dc3545;
+        }
+
+        .form-container {
+            padding: 1.5rem;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.6rem;
+        }
+
+        .navbar {
+            background-color: #001f3f;
+        }
+
+        .navbar .navbar-brand, .navbar .nav-link {
+            color: #ffffff;
+        }
+
+        .navbar .nav-link:hover {
+            color: #d1ecf1;
+        }
+
+        footer {
+            background-color: #001f3f !important;
+            color: #ffffff !important;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #ffffff !important;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #d1ecf1 !important;
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #ffffff !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">Zeal International School</a>
+    </div>
+</nav>
+
+<main class="container mt-5">
+    <div class="form-container">
+        <h2 class="section-header">Enroll Teacher</h2>
+        <p>Please fill in the details below to enroll a new teacher.</p>
+
+        <!-- Error messages at the top -->
+        {% if messages %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <!-- Left Side: Personal Details -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="teacher_name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="teacher_name" name="name" value="{{ name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher_dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="teacher_dob" name="dob" value="{{ dob }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher_address" class="form-label">Address</label>
+                        <textarea class="form-control" id="teacher_address" name="address" rows="2">{{ address }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher_courses" class="form-label">Courses</label>
+                        <select class="form-control" id="teacher_courses" name="courses" required>
+                            <option value="" disabled selected>Select a course</option>
+                            {% for course in courses %}
+                            <option value="{{ course.id }}">{{ course.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div> 
+                </div>
+
+                <!-- Right Side: Qualification & Contact Info -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="teacher_qualification" class="form-label">Qualification</label>
+                        <input type="text" class="form-control" id="teacher_qualification" name="qualification" value="{{ qualification }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="teacher_email" name="email" value="{{ email }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="teacher_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="teacher_password" name="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Enroll Teacher</button>
+        </form>
+
+        <div class="account-redirect">
+            <p>Already have an account? <a href="{% url 'users:login' %}">Login here</a></p>
+        </div>
+    </div>
+</main>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
