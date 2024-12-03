@@ -817,21 +817,27 @@ def parent_invoices(request):
      })
 
 
+@csrf_exempt
 def generate_bill(request):
     if request.method == 'POST':
 
         selected_fee_ids = request.POST.getlist('fee_types')
+        print("selected_fee_ids", selected_fee_ids)
         selected_fees = FeeType.objects.filter(id__in=selected_fee_ids)
+        print("selected_fees", selected_fees)
         parent = get_object_or_404(Parent, profile=request.user.profile)
         children = parent.children.all()  
         total_amount = sum(fee.amount for fee in selected_fees)
-        total_amount_in_paise = int(total_amount * 100) 
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_SECRET_KEY))
-        order = client.order.create({
-            'amount': total_amount_in_paise,  
-            'currency': 'INR',
-            'payment_capture': '1',
-        })
+        total_amount = int(total_amount)
+        order  = {}
+        if total_amount > 0:
+            order = client.order.create({
+                'amount': total_amount,  
+                'currency': 'INR',
+                'payment_capture': '1',
+            })
+        
         for student in children:
             for fee in selected_fees:
                 Payment.objects.create(
@@ -855,7 +861,7 @@ def generate_bill(request):
             'selected_fees': selected_fees,
             'total_amount': total_amount,  
             'razorpay_key_id': settings.RAZORPAY_KEY_ID,  
-            'order_id': order['id'], 
+            'order_id': order.get('id', None), 
         }
         return render(request, 'users/bill.html', context)
 
