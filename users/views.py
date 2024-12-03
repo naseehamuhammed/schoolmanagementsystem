@@ -379,14 +379,21 @@ def admin_dashboard(request):
 
 @login_required
 def principal_dashboard(request):
-    if request.user.profile.is_principal:
-        principal = Principal.objects.get(profile=request.user.profile)
-        teachers = Teacher.objects.all()  
-        students=Student.objects.all()
-        return render(request, 'principal/principal_dashboard.html', {'teachers': teachers, 'principal': principal})
-    else:
-        return redirect('users:home')
-    
+
+        try:
+            principal = Principal.objects.get(profile=request.user.profile)
+            teachers = Teacher.objects.all()
+            students = Student.objects.all()
+            leave_requests = LeaveRequest.objects.filter(status='Pending')
+
+            return render(request, 'principal/principal_dashboard.html', {
+                'principal': principal,
+                'teachers': teachers,
+                'students': students,
+                'leave_requests': leave_requests,
+            })
+        except Principal.DoesNotExist:
+            return redirect('users:home')
 
 @login_required
 def teacher_dashboard(request, school_class_id=None):  
@@ -509,23 +516,6 @@ def request_leave(request):
         form = LeaveRequestForm()
 
     return render(request, 'users/request_leave.html', {'form': form})
-
- 
-@login_required
-def principal_dashboard(request):
-    try:
-        principal = Principal.objects.get(profile__user=request.user)
-    except Principal.DoesNotExist:
-        return redirect('users:home')
-
-    teachers = Teacher.objects.all()
-    leave_requests = LeaveRequest.objects.filter(status='Pending')
-
-    return render(request, 'principal/principal_dashboard.html', {
-        'principal': principal,
-        'teachers': teachers,
-        'leave_requests': leave_requests,
-    })
 
 
 @login_required
