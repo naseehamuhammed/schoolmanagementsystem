@@ -9,7 +9,6 @@ def generate_weekly_timetable():
         time(12, 0), time(14, 0), time(15, 0)
     ]
 
-    # Clear the existing timetable
     Timetable.objects.all().delete()
 
     school_classes = SchoolClass.objects.all()
