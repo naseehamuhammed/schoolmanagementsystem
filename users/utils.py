@@ -16,25 +16,25 @@ def generate_weekly_timetable():
     teachers = Teacher.objects.all()
 
     for school_class in school_classes:
-        used_slots = {day: set() for day in days}  # Track used slots for each day
+        used_slots = {day: set() for day in days}  
         for teacher in teachers:
             if not teacher.courses:
-                continue  # Skip teachers without an assigned course
+                continue 
 
-            course = teacher.courses  # Assuming one course per teacher
+            course = teacher.courses  
             for day in days:
                 available_slots = [
                     slot for slot in time_slots if slot not in used_slots[day]
                 ]
 
                 if not available_slots:
-                    continue  # No slots left for this day
+                    continue  
 
-                # Assign a random available slot
+            
                 slot = random.choice(available_slots)
                 used_slots[day].add(slot)
 
-                # Create timetable entry
+            
                 Timetable.objects.create(
                     teacher=teacher,
                     course=course,
